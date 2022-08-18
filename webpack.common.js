@@ -24,7 +24,7 @@ const checkPage = (pugFileName) => {
 
 module.exports = {
   entry: {
-    main: path.resolve(__dirname, 'src/js/faq.js'),
+    faq: path.resolve(__dirname, 'src/js/faq.js'),
     icons: path.resolve(__dirname, 'src/js/icons.js')
   },
   output: {

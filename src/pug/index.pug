@@ -19,12 +19,12 @@ block wrapper
           </svg>
       .tab-content
         .tab-panel
-          button.tab-panel__link.tab-panel__link_active.btn-unstyled(type="button" data-target="order") order
-          button.tab-panel__link.btn-unstyled(type="button" data-target="payment") payment
-          button.tab-panel__link.btn-unstyled(type="button" data-target="shipment") shipment
-          button.tab-panel__link.btn-unstyled(type="button" data-target="account") account
+          button.tab-panel__link.tab-panel__link_active.btn-unstyled(type="button" data-target="#order") order
+          button.tab-panel__link.btn-unstyled(type="button" data-target="#payment") payment
+          button.tab-panel__link.btn-unstyled(type="button" data-target="#shipment") shipment
+          button.tab-panel__link.btn-unstyled(type="button" data-target="#account") account
 
-        .alert
+        .alert(style="display:none;")
           .alert__heading Sorry!
             br
             | We can't find a match.
@@ -35,9 +35,9 @@ block wrapper
           #order.tab-pane.tab-pane_active
             each panesArrItem in panesArr
               +accordion(panesArrItem.title, panesArrItem.desc)
-          #payment.tab-pane
-          #shipment.tab-pane
-          #account.tab-pane
+          #payment.tab-pane payment
+          #shipment.tab-pane shipment
+          #account.tab-pane account
 
       //- form.search.search-modal__form(method="get" role="search" action="#")
         .field

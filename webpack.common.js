@@ -24,9 +24,7 @@ const checkPage = (pugFileName) => {
 
 module.exports = {
   entry: {
-    //main: [path.resolve(__dirname, 'src/js/main.js'), path.resolve(__dirname, 'src/scss/main.scss')],
-    main: path.resolve(__dirname, 'src/js/main.js'),
-    //account: path.resolve(__dirname, 'src/js/account.js'),
+    main: path.resolve(__dirname, 'src/js/faq.js'),
     icons: path.resolve(__dirname, 'src/js/icons.js')
   },
   output: {
@@ -86,10 +84,6 @@ module.exports = {
           use: [
             { loader: 'svg-sprite-loader', options: {
                 extract: true,
-                /*
-                publicPath: '/',
-                spriteFilename: './img/icons/icons.svg'
-                */
                 publicPath: 'img/icons/',
                 spriteFilename: 'icons.svg'
               }
@@ -116,9 +110,7 @@ module.exports = {
     ...pages.map(page => new HtmlWebpackPlugin({
       template: `${pagesDir}/${page}`,
       filename: `./${page.replace(/\.pug/,'.html')}`,
-      //favicon: `${paths.src}/img/favicon.ico`,
       minify: false,
-      //chunks: checkPage(page)
     })),
     new SpriteLoaderPlugin({
       plainSprite: true

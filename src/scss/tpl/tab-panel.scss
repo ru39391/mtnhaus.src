@@ -1,0 +1,30 @@
+.tab-panel {
+  @include border(0 0 1px,$color__border);
+  margin: 0 0 20px;
+}
+
+.tab-panel__link {
+  @extend %fw-bold;
+  @include before;
+  @include offset(0 36px 0 0,0 0 6px);
+  @include fs-lh(20px,$line-height__content);
+  text-transform: uppercase;
+  color: $color__default;
+  letter-spacing: 0.01em;
+  transition: all .3s ease;
+
+  &:before {
+    @include wh(100%,3px);
+    left: 0;
+    bottom: -1px;
+    transition: all .3s ease;
+  }
+
+  &.tab-panel__link_active {
+    color: $color__danger;
+
+    &:before {
+      background-color: $color__danger;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+.tab-content__wrapper {
+  &.tab-content__wrapper_disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,21 @@
+.alert {
+  @include offset(0 0 80px,40px);
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.04);
+}
+
+.alert__heading {
+  @extend %fw-extrabold;
+  @include fs-lh(20px,28/20);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: $color__default;
+  margin: 0 0 12px;
+}
+
+.alert__content {
+  @include fs-lh(18px,28/18);
+  letter-spacing: 0.01em;
+  color: $color__light;
+}

@@ -1,5 +1,5 @@
 {
-  "name": "myBaseTpl",
+  "name": "mtnhaus",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ru39391/myBaseTpl.git"
+    "url": "https://github.com/ru39391/mtnhaus.src.git"
   },
   "keywords": [],
   "author": "tg:vladimir_wd <my.freelance.mailbox@gmail.com> (https://freelance.ru/nutheadbeast)",
@@ -42,12 +42,5 @@
     "webpack-cli": "^4.4.0",
     "webpack-dev-server": "^3.11.2"
   },
-  "dependencies": {
-    "bootstrap": "^4.6.0",
-    "desandro-classie": "^1.0.1",
-    "formstone": "^1.4.22",
-    "jquery": "^3.6.0",
-    "popper.js": "^1.16.1",
-    "swiper": "^5.4.1"
-  }
+  "dependencies": {}
 }

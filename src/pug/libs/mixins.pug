@@ -1,0 +1,6 @@
+mixin image(picpath, classname="img-fluid")
+  img(class=classname src=`../img/${picpath}` alt="")
+
+mixin icon(icon, classname="icon-fluid")
+  svg(class=classname)
+    use(xlink:href=`/img/icons/icons.svg#icon-${icon}`)

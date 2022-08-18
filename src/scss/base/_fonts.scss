@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Artegra Sans';
+    src: url('../fonts/ArtegraSans-Regular.eot');
+    src: local('Artegra Sans Regular'), local('ArtegraSans-Regular'),
+        url('../fonts/ArtegraSans-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/ArtegraSans-Regular.woff2') format('woff2'),
+        url('../fonts/ArtegraSans-Regular.woff') format('woff'),
+        url('../fonts/ArtegraSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Artegra Sans';
+    src: url('../fonts/ArtegraSans-Bold.eot');
+    src: local('Artegra Sans Bold'), local('ArtegraSans-Bold'),
+        url('../fonts/ArtegraSans-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/ArtegraSans-Bold.woff2') format('woff2'),
+        url('../fonts/ArtegraSans-Bold.woff') format('woff'),
+        url('../fonts/ArtegraSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}

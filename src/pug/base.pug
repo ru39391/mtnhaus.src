@@ -1,0 +1,33 @@
+include libs/mixins
+
+block meta
+  - var pageClass = '';
+  - var title = 'Базовый шаблон';
+
+doctype html
+html(lang="ru")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+    title #{title}
+    meta(name="keywords" content="")
+    meta(name="description" content="")
+
+    //- link(href="../img/favicon.ico" rel="shortcut icon")
+
+  body(class=pageClass)    
+    block header
+      include base/header.pug
+
+    block wrapper
+      section.wrapper
+        h1 #{title}
+        +icon('terminal-fill')
+
+    block footer
+      include base/footer.pug
+
+    script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js")
+    script(src="https://unpkg.com/swiper@5.4.1/js/swiper.min.js")

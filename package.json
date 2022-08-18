@@ -1,0 +1,53 @@
+{
+  "name": "myBaseTpl",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ru39391/myBaseTpl.git"
+  },
+  "keywords": [],
+  "author": "tg:vladimir_wd <my.freelance.mailbox@gmail.com> (https://freelance.ru/nutheadbeast)",
+  "license": "ISC",
+  "homepage": "",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
+    "copy-webpack-plugin": "^10.2.0",
+    "css-loader": "^5.0.1",
+    "css-minimizer-webpack-plugin": "^1.2.0",
+    "file-loader": "^6.2.0",
+    "fs": "0.0.1-security",
+    "html-loader": "^1.3.2",
+    "html-webpack-plugin": "^4.5.1",
+    "mini-css-extract-plugin": "^1.3.4",
+    "node-sass": "^5.0.0",
+    "postcss": "^8.2.4",
+    "postcss-loader": "^4.2.0",
+    "postcss-preset-env": "^6.7.0",
+    "pug-html-loader": "^1.1.5",
+    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.1.0",
+    "sass-loader": "^10.1.1",
+    "style-loader": "^2.0.0",
+    "sugarss": "^3.0.3",
+    "svg-sprite-loader": "^5.2.1",
+    "terser-webpack-plugin": "^5.1.1",
+    "webpack": "^5.16.0",
+    "webpack-cli": "^4.4.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "desandro-classie": "^1.0.1",
+    "formstone": "^1.4.22",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
+    "swiper": "^5.4.1"
+  }
+}

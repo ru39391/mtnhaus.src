@@ -11,5 +11,4 @@ const tabConfig = {
 tabContentArr.forEach(tabContentArrEl => {
   const tabContent = new Tab(tabContentArrEl, tabConfig);
   tabContent.setEventListeners();
-  console.log(tabContent);
 });

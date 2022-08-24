@@ -9,7 +9,7 @@
     border-color: $color__danger;
 
     .search-form__btn_type_submit {
-      color: $color__danger;
+      color: $color__danger !important;
     }
   }
 }
@@ -23,15 +23,37 @@
   justify-content: center;
   color: $color__light;
 
+  &.search-form__btn_type_submit {
+    order: 1;
+  }
+
   &.search-form__btn_type_close {
+    order: 3;
+    color: #c8c8c8;
     display: none;
+  }
+
+  &.search-form__btn_visible {
+    display: flex;
+  }
+
+  &:disabled {
+    opacity: .5;
+    cursor: default;
   }
 }
 
 .search-form__field {
   @include fs-lh(18px,1);
   font-family: $font-family__default;
+  order: 2;
   border: 0;
   flex-grow: 1;
   padding: 8px;
+
+  &:focus {
+    & + .search-form__btn_type_submit {
+      color: $color__default;
+    }
+  }
 }

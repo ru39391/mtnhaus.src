@@ -120,7 +120,9 @@ button {
   overflow: hidden;
 }
 
-.matched {
+.highlighted {
+  @include inline-block;
+  @include offset(0 4px,0 4px);
   color: #fff;
   background-color: $color__danger;
 }

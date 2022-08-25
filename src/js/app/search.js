@@ -1,12 +1,8 @@
 import { Search } from '../components/Search';
 import { Tab } from '../components/Tab';
 import { Accordion } from '../components/Accordion';
-import { tabConfig, accordionConfig } from '../utils/constants';
+import { tabConfig, accordionConfig, tabContent, searchFormConfig, alertConfig } from '../utils/constants';
 
-const tabContent = {
-  item: document.querySelector('.tab-content'),
-  wrapper: document.querySelector('.tab-content__wrapper')
-};
 const accordionsArr = Array.from(document.querySelectorAll('.accordion'));
 const accordionParamsArr = accordionsArr.map(item => {
   return {
@@ -18,22 +14,6 @@ const accordionParamsArr = accordionsArr.map(item => {
 });
 
 const searchForm = document.querySelector('.search-form');
-const searchFormConfig = {
-  searchFormClassActive: 'search-form_active',
-  searchFormClassSuccess: 'search-form_success',
-  searchFieldSel: '.search-form__field',
-  searchBtnSubmitSel: '.search-form__btn_type_submit',
-  searchBtnResetSel: '.search-form__btn_type_close'
-};
-const alertConfig = {
-  alertTplSel: '.alert-tpl',
-  alertSel: '.alert',
-  alertHeaderSel: '.alert__heading',
-  alertBodySel: '.alert__content',
-  alertHeaderMess: `Sorry!//We can't find a match.`,
-  alertBodyMess: 'Please review the word or try another search.'
-};
-
 if (searchForm) {
   const search = new Search(searchForm, searchFormConfig, alertConfig,
     ({ isFound, tabIds, tabData }) => {
@@ -79,12 +59,11 @@ if (searchForm) {
           if (index == 0) {
             tabElem.toggler.classList.add(tabConfig.tabTogglerActiveClass);
             tabElem.pane.classList.add(tabConfig.tabPaneActiveClass);
-            return tabElem;
           } else {
             tabElem.toggler.classList.remove(tabConfig.tabTogglerActiveClass);
             tabElem.pane.classList.remove(tabConfig.tabPaneActiveClass);
-            return tabElem;
           }
+          return tabElem;
         });
 
         tabsArr.forEach(tabsArrEl => {

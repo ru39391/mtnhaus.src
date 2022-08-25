@@ -38,7 +38,6 @@ if(searchForm) {
       if(!isFound) {
         search.showAlert(tabContentWrapper);
       } else {
-        console.log(tabIds);
         const tabParams = {
           toggler: tabContent.querySelector(tabConfig.tabTogglerSelector),
           pane: tabContent.querySelector(tabConfig.tabPaneSelector)
@@ -53,31 +52,45 @@ if(searchForm) {
           wrapper: tabHolderParams.wrapper.cloneNode(false)
         }
 
+        const accordionArr = tabData.map((item, index, arr) => {
+          const accordionElem = {
+            parentId: item.tab,
+            wrapper: item.item.cloneNode(false)
+          };
+          accordionElem.wrapper.append(item.title);
+          accordionElem.wrapper.append(item.desc);
+          return accordionElem;
+        });
+
         const tabsArr = tabIds.map((item, index, arr) => {
-          const tabs = {
+          const tabElem = {
             toggler: tabParams.toggler.cloneNode(false),
             pane: tabParams.pane.cloneNode(false)
           };
 
-          tabs.toggler.setAttribute('data-target',`#${item}`);
-          tabs.toggler.textContent = item;
-
-          tabs.pane.id = item;
-          tabs.pane.textContent = item;
+          tabElem.toggler.setAttribute('data-target',`#${item}`);
+          tabElem.toggler.textContent = item;
+          tabElem.pane.id = item;
 
           if(index == 0) {
-            return tabs;
+            return tabElem;
           } else {
-            tabs.toggler.classList.remove(tabConfig.tabTogglerActiveClass);
-            tabs.pane.classList.remove(tabConfig.tabPaneActiveClass);
-            return tabs;
+            tabElem.toggler.classList.remove(tabConfig.tabTogglerActiveClass);
+            tabElem.pane.classList.remove(tabConfig.tabPaneActiveClass);
+            return tabElem;
           }
         });
 
-        console.log(tabsArr);
         tabsArr.forEach(tabsArrEl => {
           tabResultParams.panel.append(tabsArrEl.toggler);
           tabResultParams.wrapper.append(tabsArrEl.pane);
+        });
+
+        accordionArr.forEach(accordionArrEl => {
+          const tabPane = tabResultParams.wrapper.querySelector(`#${accordionArrEl.parentId}`);
+          tabPane.append(accordionArrEl.wrapper);
+          const accordion = new Accordion(accordionArrEl.wrapper, accordionConfig);
+          accordion.setEventListeners();
         });
 
         tabResultParams.content.append(tabResultParams.panel);
@@ -86,7 +99,8 @@ if(searchForm) {
         const tabContentResult = new Tab(tabResultParams.content, tabConfig);
         tabContentResult.setEventListeners();
         tabContent.before(tabResultParams.content);
-        tabContent.style.display = 'none';
+
+        //tabContent.style.display = 'none';
       }
     }
   });

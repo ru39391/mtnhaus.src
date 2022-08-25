@@ -56,19 +56,36 @@ export class Search {
   _replaceMatch(el, match) {
     const elem = {
       node: el.cloneNode(false),
-      content: el.textContent.split(' ')
+      content: el.textContent.toLowerCase().split(match).join('//divider//')
     };
-    const contentArr = elem.content.map(item => {
-      if(item == match) {
-        this._createEl(item, 'span', 'highlighted');
-      } else {
-        return `${item}\u0020`;
+
+    let contentArr = elem.content.split('//').filter(item => Boolean(item));
+    contentArr = contentArr.map((item, index, arr) => {
+      switch(item == 'divider') {
+        case true:
+          if(index == 0) {
+            return this._createEl(match.replace(match[0], match[0].toUpperCase()), 'span', 'highlighted');
+          } else {
+            return this._createEl(match, 'span', 'highlighted');
+          }
+          break;
+
+        case false:
+          if(index == 0) {
+            return item.replace(item[0], item[0].toUpperCase());
+          } else {
+            return item;
+          }
+          break;
       }
     });
 
+    const string = this._createEl('', 'span');
     contentArr.forEach(contentArrEl => {
-      elem.node.append(contentArrEl);
+      string.append(contentArrEl);
     });
+
+    elem.node.append(string);
     return elem.node;
   }
 
@@ -105,6 +122,7 @@ export class Search {
   setEventListeners() {
     this._searchForm.addEventListener('submit', e => {
       e.preventDefault();
+      //console.log('submit');
       const searchFieldValue = this._searchField.value.toLowerCase();
       this._tabDataHandled = this._tabData.filter(item => this._isTextFound(item.title, searchFieldValue) || this._isTextFound(item.desc, searchFieldValue));
 
@@ -127,6 +145,7 @@ export class Search {
 
     this._searchForm.addEventListener('reset', e => {
       console.log('reset');
+      this._searchBtnSubmit.disabled = true;
       this._removeEl(this._alert);
       this._toggleSearchFormActive(false);
       this._toggleSearchFormSuccess(false);
@@ -134,9 +153,12 @@ export class Search {
 
 
     this._searchField.addEventListener('input', e => {
+      //console.log(e.target.value.length);
       if(e.target.value.length > 0) {
+        this._searchBtnSubmit.disabled = false;
         this._toggleSearchFormActive(true);
       } else {
+        this._searchBtnSubmit.disabled = true;
         this._removeEl(this._alert);
         this._toggleSearchFormActive(false);
         this._toggleSearchFormSuccess(false);

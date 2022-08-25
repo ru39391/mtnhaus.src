@@ -2,7 +2,7 @@ export class Search {
   constructor(searchFormEl,
     {searchFormClassActive, searchFormClassSuccess, searchFieldSel, searchBtnSubmitSel, searchBtnResetSel},
     {alertTplSel, alertSel, alertHeaderSel, alertBodySel, alertHeaderMess, alertBodyMess},
-    {resultRender}
+    resultRender
   ) {
     this._searchForm = searchFormEl;
     this._searchFormClassActive = searchFormClassActive;
@@ -18,6 +18,8 @@ export class Search {
     this._alertBodyMess = alertBodyMess;
     this._tabData = [];
     this._tabDataHandled = [];
+    this._sourceEl = null;
+    this._resultEl = null;
     this._resultRender = resultRender;
   }
 
@@ -105,6 +107,15 @@ export class Search {
     }
   }
 
+  _resetSearchForm() {
+    this._searchBtnSubmit.disabled = true;
+    this._sourceEl.style = null;
+    this._removeEl(this._resultEl);
+    this._removeEl(this._alert);
+    this._toggleSearchFormActive(false);
+    this._toggleSearchFormSuccess(false);
+  }
+
   getTabData(arr) {
     this._tabData = arr;
   }
@@ -119,10 +130,18 @@ export class Search {
     el.before(this._alert);
   }
 
+  handleSearchResult({source, result}) {
+    this._sourceEl = source;
+    this._resultEl = result;
+  }
+
   setEventListeners() {
     this._searchForm.addEventListener('submit', e => {
       e.preventDefault();
-      //console.log('submit');
+      if(this._sourceEl && this._resultEl) {
+        this._resetSearchForm();
+      };
+
       const searchFieldValue = this._searchField.value.toLowerCase();
       this._tabDataHandled = this._tabData.filter(item => this._isTextFound(item.title, searchFieldValue) || this._isTextFound(item.desc, searchFieldValue));
 
@@ -134,7 +153,7 @@ export class Search {
         tabIds: this._getTabIds(this._tabDataHandled.map(item => item.tab)),
         tabData: this._tabDataHandled.map(item => {
           return {
-            item: item.item,
+            el: item.el,
             tab: item.tab,
             title: this._replaceMatch(item.title, searchFieldValue),
             desc: this._replaceMatch(item.desc, searchFieldValue)
@@ -144,24 +163,15 @@ export class Search {
     });
 
     this._searchForm.addEventListener('reset', e => {
-      console.log('reset');
-      this._searchBtnSubmit.disabled = true;
-      this._removeEl(this._alert);
-      this._toggleSearchFormActive(false);
-      this._toggleSearchFormSuccess(false);
+      this._resetSearchForm();
     });
 
-
     this._searchField.addEventListener('input', e => {
-      //console.log(e.target.value.length);
       if(e.target.value.length > 0) {
         this._searchBtnSubmit.disabled = false;
         this._toggleSearchFormActive(true);
       } else {
-        this._searchBtnSubmit.disabled = true;
-        this._removeEl(this._alert);
-        this._toggleSearchFormActive(false);
-        this._toggleSearchFormSuccess(false);
+        this._resetSearchForm();
       }
     });
   }

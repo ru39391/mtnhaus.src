@@ -1,84 +1,101 @@
+import { Search } from '../components/Search';
+import { Tab } from '../components/Tab';
 import { Accordion } from '../components/Accordion';
-import {accordionConfig} from '../utils/constants';
+import { tabConfig, accordionConfig, tabContent, searchFormConfig, alertConfig } from '../utils/constants';
 
-const search = {
-  form: document.querySelector('.search-form'),
-  field: document.querySelector('.search-form__field'),
-  submitBtn: document.querySelector('.search-form__btn_type_submit'),
-  closeBtn: document.querySelector('.search-form__btn_type_close'),
-  alert: document.querySelector('.alert')
-};
-
-const tabContentWrapper = document.querySelector('.tab-content__wrapper');
 const accordionsArr = Array.from(document.querySelectorAll('.accordion'));
 const accordionParamsArr = accordionsArr.map(item => {
   return {
-    item: item,
+    el: item,
     tab: item.parentNode.id,
     title: item.querySelector('.accordion__title').textContent.toLowerCase(),
     desc: item.querySelector('.accordion__desc').textContent.toLowerCase()
   }
 });
 
-function resetSearchForm() {
-  search.submitBtn.disabled = true;
-  search.form.classList.remove('search-form_active');
-  search.closeBtn.classList.remove('search-form__btn_visible');
-  search.alert.classList.remove('alert_visible');
-  tabContentWrapper.classList.remove('tab-content__wrapper_disabled');
-  accordionsArr.forEach(accordionsArrEl => {
-    accordionsArrEl.style = null;
-  });
-}
+const searchForm = document.querySelector('.search-form');
+if (searchForm) {
+  const search = new Search(searchForm, searchFormConfig, alertConfig,
+    ({ isFound, tabIds, tabData }) => {
+      if (!isFound) {
+        search.showAlert(tabContent.wrapper);
+        tabContent.item.style = null;
+      } else {
+        const tabParams = {
+          toggler: tabContent.item.querySelector(tabConfig.tabTogglerSelector),
+          pane: tabContent.item.querySelector(tabConfig.tabPaneSelector)
+        };
+        const tabHolderParams = {
+          panel: tabParams.toggler.parentNode,
+          wrapper: tabParams.pane.parentNode
+        };
+        const tabResultParams = {
+          content: tabContent.item.cloneNode(false),
+          panel: tabHolderParams.panel.cloneNode(false),
+          wrapper: tabHolderParams.wrapper.cloneNode(false)
+        }
+        const accordionArr = tabData.map((item, index, arr) => {
+          const {el, tab, title, desc} = item;
+          const accordionElem = {
+            parentId: tab,
+            wrapper: el.cloneNode(false)
+          };
+          accordionElem.wrapper.append(title);
+          accordionElem.wrapper.append(desc);
+          return accordionElem;
+        });
 
-function setVisible(el, arr) {
-  const elActive = arr.find(item => item.item == el);
-  if(elActive && elActive.item == el) {
-    el.style = null;
-  } else {
-    el.style.display = 'none';
-  }
-}
+        const tabsArr = tabIds.map((item, index, arr) => {
+          const tabElem = {
+            toggler: tabParams.toggler.cloneNode(false),
+            pane: tabParams.pane.cloneNode(false)
+          };
 
-search.form.addEventListener('submit', e => {
-  e.preventDefault();
-  const formValue = search.field.value.toLowerCase();
-  let matchedArr = accordionParamsArr.filter(item => item.title.indexOf(formValue) != -1 || item.desc.indexOf(formValue) != -1);
+          tabElem.toggler.setAttribute('data-target', `#${item}`);
+          tabElem.toggler.textContent = item;
+          tabElem.pane.id = item;
 
-  if(matchedArr.length) {
-    search.form.classList.add('search-form_active');
-    search.closeBtn.classList.add('search-form__btn_visible');
-    search.alert.classList.remove('alert_visible');
-    tabContentWrapper.classList.remove('tab-content__wrapper_disabled');
+          if (index == 0) {
+            tabElem.toggler.classList.add(tabConfig.tabTogglerActiveClass);
+            tabElem.pane.classList.add(tabConfig.tabPaneActiveClass);
+          } else {
+            tabElem.toggler.classList.remove(tabConfig.tabTogglerActiveClass);
+            tabElem.pane.classList.remove(tabConfig.tabPaneActiveClass);
+          }
+          return tabElem;
+        });
 
-    matchedArr = matchedArr.map(item => {
-      return {
-        item: item.item,
-        tab: item.tab,
-        title: item.title,
-        desc: item.desc
+        tabsArr.forEach(tabsArrEl => {
+          const {toggler, pane} = tabsArrEl;
+          tabResultParams.panel.append(toggler);
+          tabResultParams.wrapper.append(pane);
+        });
+
+        accordionArr.forEach(accordionArrEl => {
+          const {parentId, wrapper} = accordionArrEl;
+
+          const tabPane = tabResultParams.wrapper.querySelector(`#${parentId}`);
+          tabPane.append(wrapper);
+
+          const accordion = new Accordion(wrapper, accordionConfig);
+          accordion.setEventListeners();
+        });
+
+        tabResultParams.content.append(tabResultParams.panel);
+        tabResultParams.content.append(tabResultParams.wrapper);
+
+        const tabContentResult = new Tab(tabResultParams.content, tabConfig);
+        tabContentResult.setEventListeners();
+        tabContent.item.before(tabResultParams.content);
+
+        tabContent.item.style.display = 'none';
+        search.handleSearchResult({
+          source: tabContent.item,
+          result: tabResultParams.content
+        });
       }
-    });
-    accordionsArr.forEach(accordionsArrEl => {
-      setVisible(accordionsArrEl, matchedArr);
-    });
-  } else {
-    search.alert.classList.add('alert_visible');
-    search.closeBtn.classList.add('search-form__btn_visible');
-    tabContentWrapper.classList.remove('tab-content__wrapper_disabled');
-  }
-});
-
-search.field.addEventListener('input', e => {
-  if(e.target.value.length > 0) {
-    search.submitBtn.disabled = false;
-    tabContentWrapper.classList.add('tab-content__wrapper_disabled');
-  } else {
-    resetSearchForm();
-  }
-});
-
-search.closeBtn.addEventListener('click', () => {
-  search.field.value = '';
-  resetSearchForm();
-});
+    }
+  );
+  search.setEventListeners();
+  search.getTabData(accordionParamsArr);
+}

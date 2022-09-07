@@ -12,7 +12,7 @@ block wrapper
           <svg class="pointer-events-none" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M8.0625 1.5C4.43813 1.5 1.5 4.43813 1.5 8.0625C1.5 11.6869 4.43813 14.625 8.0625 14.625C9.87316 14.625 11.5115 13.8925 12.6995 12.7062C13.8898 11.5177 14.625 9.87655 14.625 8.0625C14.625 4.43813 11.6869 1.5 8.0625 1.5ZM0.25 8.0625C0.25 3.74778 3.74778 0.25 8.0625 0.25C12.3772 0.25 15.875 3.74778 15.875 8.0625C15.875 9.99631 15.1717 11.7668 14.0081 13.1307L17.5665 16.6827C17.8108 16.9265 17.8112 17.3222 17.5673 17.5665C17.3235 17.8108 16.9278 17.8112 16.6835 17.5673L13.1237 14.0141C11.7607 15.1742 9.99296 15.875 8.0625 15.875C3.74778 15.875 0.25 12.3772 0.25 8.0625Z" fill="currentColor"></path>
           </svg>
-        button.search-form__btn.search-form__btn_type_close(type="button")
+        button.search-form__btn.search-form__btn_type_close(type="reset")
           <svg class="pointer-events-none" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2.28499 3.35858C1.95549 3.02908 1.95549 2.49485 2.28499 2.16534C2.6145 1.83584 3.14873 1.83584 3.47823 2.16534L15.9538 14.6409C16.2833 14.9704 16.2833 15.5047 15.9538 15.8342C15.6243 16.1637 15.0901 16.1637 14.7606 15.8342L2.28499 3.35858Z" fill="currentColor"></path>
             <path d="M15.7167 3.35858C16.0463 3.02908 16.0463 2.49485 15.7167 2.16534C15.3872 1.83584 14.853 1.83584 14.5235 2.16534L2.04791 14.6409C1.71841 14.9704 1.7184 15.5047 2.04791 15.8342C2.37741 16.1637 2.91165 16.1637 3.24115 15.8342L15.7167 3.35858Z" fill="currentColor"></path>
@@ -23,13 +23,6 @@ block wrapper
           button.tab-panel__link.btn-unstyled(type="button" data-target="#payment") payment
           button.tab-panel__link.btn-unstyled(type="button" data-target="#shipment") shipment
           button.tab-panel__link.btn-unstyled(type="button" data-target="#account") account
-
-        .alert
-          .alert__heading Sorry!
-            br
-            | We can't find a match.
-          .alert__content Please review the word or try another search.
-
         - var orderArr = [{title: 'Can I return all or part of my order?'},{title: 'Is there a limit to how much I can order online? Why did I receive an order max error notification?', desc: 'To properly manage inventory for all online customers, an order quantity limit of 1/2 pallet per item, and re-order frequency of 15 days has been set for online orders. If customers are able to order items in full pallet quantities, please contact us regarding moving to direct service.'}];
         - var paymentArr = [{title: 'What is the status of my order?'},{title: 'How can I track and manage my order history?'},{title: 'Can I order by phone or email instead of online?'}];
         - var shipmentArr = [{title: 'Are all items offered on your website? What if something I order is not available online?'},{title: 'How can I get a sample of an ingredient that I am considering purchasing online?'}];
@@ -47,12 +40,7 @@ block wrapper
           #account.tab-pane
             each accountArrItem in accountArr
               +accordion(accountArrItem.title, accountArrItem.desc)
-
-      //- form.search.search-modal__form(method="get" role="search" action="#")
-        .field
-          .search__button.field__button.focus-inset(aria-label="Search Ingredients")
-            span.icon
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.0625 1.5C4.43813 1.5 1.5 4.43813 1.5 8.0625C1.5 11.6869 4.43813 14.625 8.0625 14.625C9.87316 14.625 11.5115 13.8925 12.6995 12.7062C13.8898 11.5177 14.625 9.87655 14.625 8.0625C14.625 4.43813 11.6869 1.5 8.0625 1.5ZM0.25 8.0625C0.25 3.74778 3.74778 0.25 8.0625 0.25C12.3772 0.25 15.875 3.74778 15.875 8.0625C15.875 9.99631 15.1717 11.7668 14.0081 13.1307L17.5665 16.6827C17.8108 16.9265 17.8112 17.3222 17.5673 17.5665C17.3235 17.8108 16.9278 17.8112 16.6835 17.5673L13.1237 14.0141C11.7607 15.1742 9.99296 15.875 8.0625 15.875C3.74778 15.875 0.25 12.3772 0.25 8.0625Z" fill="#838383"/>
-              </svg>
-          input#Search-In-Modal.search__input.field__input(type="search" name="q" value="" placeholder="Search Ingredients")
+      template.alert-tpl
+        .alert
+          .alert__heading
+          .alert__content

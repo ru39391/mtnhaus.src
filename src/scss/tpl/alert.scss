@@ -1,18 +1,15 @@
 .alert {
   @include offset(0 0 80px,40px);
-  display: none;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.04);
-
-  &.alert_visible {
-    display: block;
-  }
 }
 
 .alert__heading {
   @extend %fw-extrabold;
   @include fs-lh(20px,28/20);
+  display: flex;
+  flex-direction: column;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: $color__default;

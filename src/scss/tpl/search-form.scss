@@ -5,11 +5,17 @@
   border-radius: 4px;
   border: 1px solid $color__border;
 
-  &.search-form_active {
+  &.search-form_success {
     border-color: $color__danger;
 
     .search-form__btn_type_submit {
       color: $color__danger !important;
+    }
+  }
+
+  &.search-form_active {
+    .search-form__btn_type_close {
+      display: flex;
     }
   }
 }
@@ -31,10 +37,6 @@
     order: 3;
     color: #c8c8c8;
     display: none;
-  }
-
-  &.search-form__btn_visible {
-    display: flex;
   }
 
   &:disabled {

@@ -8,8 +8,8 @@ const accordionParamsArr = accordionsArr.map(item => {
   return {
     el: item,
     tab: item.parentNode.id,
-    title: item.querySelector('.accordion__title').textContent.toLowerCase(),
-    desc: item.querySelector('.accordion__desc').textContent.toLowerCase()
+    title: item.querySelector('.accordion__title'),
+    desc: item.querySelector('.accordion__desc')
   }
 });
 
@@ -34,6 +34,7 @@ if (searchForm) {
           panel: tabHolderParams.panel.cloneNode(false),
           wrapper: tabHolderParams.wrapper.cloneNode(false)
         }
+
         const accordionArr = tabData.map((item, index, arr) => {
           const {el, tab, title, desc} = item;
           const accordionElem = {
